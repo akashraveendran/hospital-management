@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-    res.send('hospital router');
-});
+const { getHomePage } = require("../controllers/hospital-controller")
+
+/* GET home page. */
+router.get('/', getHomePage);
 
 module.exports = router;
