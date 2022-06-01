@@ -34,8 +34,18 @@ const doLogin = async (req, res) => {
         res.redirect("/admin/login")
     }
 }
-const getHomePage = (req, res) => {
-    res.render('admin/admin-dashboard', { title: 'Admin-dashbard' });
+const getHomePage = async (req, res) => {
+    try {
+        let count = {}
+        count.hospital = await HospitalModel.count();
+        count.clinic = await ClinicModel.count();
+        count.message = await MessageModel.count();
+        res.render('admin/admin-dashboard', { title: 'Admin-dashbard', count });
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured Retry !!!"
+        res.redirect("/admin/login")
+    }
 }
 const doLogout = (req, res) => {
     req.session.admin = false;
