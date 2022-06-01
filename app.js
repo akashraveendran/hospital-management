@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const connectDB = require("./config/config")
+const session = require("express-session");
+
 const { checkAdminExist } = require("./middlewares/checkAdminExist")
 
 const adminRouter = require('./routes/admin');
@@ -23,6 +25,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 } //max age 1 hour
+}))
 
 async function connect() {
   try {

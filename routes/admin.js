@@ -19,10 +19,11 @@ const {
     viewCheckupDatesPage,
     viewAllUsersPage,
     deleteUser
-} = require("../controllers/admin-controller")
+} = require("../controllers/admin-controller");
+const checkAdmin = require('../middlewares/checkAdmin');
 
 /* GET home page. */
-router.get('/', getHomePage);
+router.get('/', checkAdmin, getHomePage);
 router.get("/login", getLoginPage)
 router.post("/login", doLogin)
 router.get("/view-all-hospitals", getAllHopitals)

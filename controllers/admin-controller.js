@@ -1,13 +1,38 @@
+const AdminModel = require("../models/admin-model");
+const bcrypt = require("bcrypt")
 
 
+const getLoginPage = async (req, res) => {
+    if (req.session.alertMessage) {
+        let { alertMessage } = req.session;
+        res.render("admin/login", { alertMessage })
+        delete req.session.alertMessage
+    } else {
+        res.render("admin/login")
+    }
+}
+const doLogin = async (req, res) => {
+    try {
+        console.log(req.body, req.body.password);
+        let { password } = req.body;
+        const admin = await AdminModel.findOne({ email: req.body.email });
+        if (admin) {
+            const exist = await bcrypt.compare(password, admin.password);
+            if (exist) {
+                req.session.admin = admin;
+                return res.redirect("/admin")
+            }
+        }
+        req.session.alertMessage = "Invalid admin Credentials";
+        res.redirect("/admin/login");
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error Occured. Please Retry !!!";
+        res.redirect("/admin/login")
+    }
+}
 const getHomePage = (req, res) => {
     res.render('index', { title: 'Admin' });
-}
-const getLoginPage = (req, res) => {
-    res.send("Login page get request");
-}
-const doLogin = (req, res) => {
-    res.send("Login page post request");
 }
 const getAllHopitals = (req, res) => {
     res.send("all hospitals request");
