@@ -2,6 +2,7 @@ const AdminModel = require("../models/admin-model");
 const bcrypt = require("bcrypt")
 const HospitalModel = require("../models/hospital-model");
 const ClinicModel = require("../models/clinic-model");
+const MessageModel = require("../models/message-model")
 
 
 const getLoginPage = async (req, res) => {
@@ -124,14 +125,45 @@ const deleteClinic = async (req, res) => {
         res.redirect("/admin")
     }
 }
-const viewAllMessages = (req, res) => {
-    res.send("view clinic messages")
+const viewAllMessages = async (req, res) => {
+    try {
+        let messages = await MessageModel.find({})
+        res.render("admin/view-all-messages", { messages })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin")
+    }
 }
 const sendMessagePage = (req, res) => {
-    res.send("send message get request")
+    let { id } = req.params;
+    res.render("admin/send-message", { id })
 }
-const sendMessage = (req, res) => {
-    res.send("send message to admin")
+const sendMessage = async (req, res) => {
+    console.log(req.body)
+    let today = new Date();
+    req.body.date = today.toLocaleDateString();
+    req.body.time = today.toLocaleTimeString();
+
+    try {
+        const message = await MessageModel.create(req.body);
+        res.redirect('/admin/view-messages');
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured try again !!!"
+        res.redirect('/admin/add-message')
+    }
+}
+const deleteMessage = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await MessageModel.findOneAndDelete({ _id: id })
+        res.redirect('/admin/view-messages')
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/admin")
+    }
 }
 
 const viewCheckupDatesPage = (req, res) => {
@@ -162,6 +194,7 @@ module.exports = {
     viewAllMessages,
     sendMessagePage,
     sendMessage,
+    deleteMessage,
     viewCheckupDatesPage,
     viewAllUsersPage,
     deleteUser

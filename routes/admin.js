@@ -16,6 +16,7 @@ const {
     viewAllMessages,
     sendMessagePage,
     sendMessage,
+    deleteMessage,
     viewCheckupDatesPage,
     viewAllUsersPage,
     deleteUser
@@ -38,9 +39,10 @@ router.post("/add-clinic", checkAdmin, createClinic)
 router.get("/delete-clinic/:id", checkAdmin, deleteClinic)
 // router.get("/update-clinic/:id")
 // router.post("/update-clinic/:id")
-router.get("/view-messages", viewAllMessages)
-router.get("/send-message", sendMessagePage)
-router.post("/send-message", sendMessage)
+router.get("/view-messages", checkAdmin, viewAllMessages)
+router.get("/send-message/:id", checkAdmin, sendMessagePage)
+router.post("/send-message", checkAdmin, sendMessage)
+router.get("/delete-message/:id", checkAdmin, deleteMessage)
 router.get("/view-checkup-dates", viewCheckupDatesPage)
 router.get("/view-all-users", viewAllUsersPage)
 router.get("/delete/user/:id", deleteUser)
