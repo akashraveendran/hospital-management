@@ -1,16 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const connectDB = require("./config/config")
+const { checkAdminExist } = require("./middlewares/checkAdminExist")
 
-var adminRouter = require('./routes/admin');
-var usersRouter = require('./routes/users');
-var hospitalRouter = require('./routes/hospital');
-var clinicRouter = require('./routes/clinic');
-var labRouter = require('./routes/lab');
+const adminRouter = require('./routes/admin');
+const usersRouter = require('./routes/users');
+const hospitalRouter = require('./routes/hospital');
+const clinicRouter = require('./routes/clinic');
+const labRouter = require('./routes/lab');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,11 +24,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+async function connect() {
+  try {
+    await connectDB();
+    console.log("Connected Database")
+  } catch (error) {
+    console.log(error)
+  }
+}
+connect()
+
+
+
 app.use('/', usersRouter);
 app.use('/hospital', hospitalRouter);
 app.use('/lab', labRouter);
 app.use('/clinic', clinicRouter);
-app.use('/admin', adminRouter);
+app.use('/admin', checkAdminExist, adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
