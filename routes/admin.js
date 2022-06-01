@@ -5,6 +5,7 @@ const {
     getHomePage,
     getLoginPage,
     doLogin,
+    doLogout,
     getAllHopitals,
     addHospitalPage,
     createHospital,
@@ -27,6 +28,7 @@ const checkAdmin = require('../middlewares/checkAdmin');
 router.get('/', checkAdmin, getHomePage);
 router.get("/login", getLoginPage)
 router.post("/login", doLogin)
+router.get("/logout", doLogout)
 router.get("/view-all-hospitals", checkAdmin, getAllHopitals)
 router.get("/delete-hospital/:id", checkAdmin, deleteHospital)
 // router.get("/update-hospital/:id")
@@ -45,7 +47,7 @@ router.post("/send-message", checkAdmin, sendMessage)
 router.get("/delete-message/:id", checkAdmin, deleteMessage)
 router.get("/view-checkup-dates", viewCheckupDatesPage)
 router.get("/view-all-users", viewAllUsersPage)
-router.get("/delete/user/:id", deleteUser)
+router.get("/delete-user/:id", deleteUser)
 
 
 module.exports = router;

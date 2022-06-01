@@ -35,7 +35,11 @@ const doLogin = async (req, res) => {
     }
 }
 const getHomePage = (req, res) => {
-    res.render('index', { title: 'Admin' });
+    res.render('admin/admin-dashboard', { title: 'Admin-dashbard' });
+}
+const doLogout = (req, res) => {
+    req.session.admin = false;
+    res.redirect("/admin/login")
 }
 
 // hospitals
@@ -167,10 +171,10 @@ const deleteMessage = async (req, res) => {
 }
 
 const viewCheckupDatesPage = (req, res) => {
-    res.send("checkup dates")
+    res.render("admin/view-checkup-dates")
 }
 const viewAllUsersPage = (req, res) => {
-    res.send("view all users")
+    res.render("admin/view-all-users")
 }
 const deleteUser = (req, res) => {
     res.send("delete user")
@@ -183,6 +187,7 @@ module.exports = {
     getHomePage,
     getLoginPage,
     doLogin,
+    doLogout,
     getAllHopitals,
     addHospitalPage,
     createHospital,
