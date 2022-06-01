@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const connectDB = require("./config/config")
 const session = require("express-session");
+const fileUpload = require("express-fileupload")
 
 const { checkAdminExist } = require("./middlewares/checkAdminExist")
 
@@ -21,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
+app.use(fileUpload())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

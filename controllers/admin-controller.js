@@ -1,5 +1,6 @@
 const AdminModel = require("../models/admin-model");
 const bcrypt = require("bcrypt")
+const HospitalModel = require("../models/hospital-model")
 
 
 const getLoginPage = async (req, res) => {
@@ -34,17 +35,52 @@ const doLogin = async (req, res) => {
 const getHomePage = (req, res) => {
     res.render('index', { title: 'Admin' });
 }
-const getAllHopitals = (req, res) => {
-    res.send("all hospitals request");
-}
-const deleteHospital = (req, res) => {
-    res.send("delete hospital request");
-}
+
+// hospitals
 const addHospitalPage = (req, res) => {
-    res.send("add hospital page get request");
+    res.render("admin/add-new-hospital")
 }
-const createHospital = (req, res) => {
-    res.send("add hospital page post request");
+const createHospital = async (req, res) => {
+    console.log(req.body)
+    try {
+        const hospital = await HospitalModel.create(req.body);
+        let { image } = req.files;
+        image.mv('./public/images/hospital/' + hospital._id + ".jpg").then((err) => {
+            if (!err) {
+                return res.redirect('/admin/view-all-hospitals')
+            }
+            res.redirect('/admin/add-hospital')
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+const getAllHopitals = async (req, res) => {
+    try {
+        let hospitals = await HospitalModel.find({})
+        if (hospitals.length != 0) {
+
+            hospitals.forEach((hospital) => {
+                hospital.total_doctors = hospital.doctors.length;
+                hospital.total_dept = hospital.departments.length;
+            })
+        } else
+            hospitals = false;
+        res.render("admin/view-all-hospitals", { hospitals })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin")
+    }
+}
+const deleteHospital = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let hospital = await HospitalModel.findOneAndDelete({ _id: id })
+        res.redirect('/admin/view-all-hospitals')
+    } catch (error) {
+        console.log(error)
+    }
 }
 const getAllClinics = (req, res) => {
     res.send("all hospitals request");
