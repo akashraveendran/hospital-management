@@ -1,6 +1,7 @@
 const AdminModel = require("../models/admin-model");
 const bcrypt = require("bcrypt")
-const HospitalModel = require("../models/hospital-model")
+const HospitalModel = require("../models/hospital-model");
+const ClinicModel = require("../models/clinic-model");
 
 
 const getLoginPage = async (req, res) => {
@@ -80,19 +81,48 @@ const deleteHospital = async (req, res) => {
         res.redirect('/admin/view-all-hospitals')
     } catch (error) {
         console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/admin")
     }
 }
-const getAllClinics = (req, res) => {
-    res.send("all hospitals request");
+const getAllClinics = async (req, res) => {
+    try {
+        let clinics = await ClinicModel.find({})
+        res.render("admin/view-all-clinics", { clinics })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin")
+    }
 }
 const addClinicPage = (req, res) => {
-    res.send("add clinic page get request");
+    res.render("admin/add-new-clinic")
 }
-const createClinic = (req, res) => {
-    res.send("add clinic page post request");
+const createClinic = async (req, res) => {
+    console.log(req.body)
+    try {
+        const clinic = await ClinicModel.create(req.body);
+        let { image } = req.files;
+        image.mv('./public/images/clinic/' + clinic._id + ".jpg").then((err) => {
+            if (!err) {
+                return res.redirect('/admin/view-all-clinics')
+            }
+            res.redirect('/admin/add-clinic')
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
-const deleteClinic = (req, res) => {
-    res.send("delete clinic page  request");
+const deleteClinic = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await ClinicModel.findOneAndDelete({ _id: id })
+        res.redirect('/admin/view-all-clinics')
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/admin")
+    }
 }
 const viewAllMessages = (req, res) => {
     res.send("view clinic messages")
