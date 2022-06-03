@@ -4,3 +4,60 @@ heading
 cards of all the departments with delete button
 
 --}}
+
+
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background-color: rgba(209, 255, 245, 0.45);
+        backdrop-filter: blur(5px);
+    }
+
+    .navbar {
+        background: linear-gradient(90deg, #0cebeb, #20e3b2, #29ffc6);
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<nav class="navbar navbar-light bg-light mb-5 d-flex justify-content-space-between">
+    <h1 class="ms-3">Departments</h1>
+    <a class="btn-danger me-5 p-2" href="/hospital" style="text-decoration: none;">Back</a>
+</nav>
+
+<div class="container library">
+    <div class="row justify-content-end mb-5">
+        <div class="col-3 d-flex justify-content-end">
+
+            <a href="/hospital/add-department" class="btn btn-success p-3 text-light">Add New Department</a>
+        </div>
+    </div>
+    <div class="row">
+        {{#if departments}}
+        {{#each departments}}
+        <div class="col-6">
+            <div class="card p-5">
+                <div class="container">
+                    <h4><b>{{department}}</b></h4>
+                    <h6>{{shortName}} </h6>
+                    <h6>{{description}} </h6>
+                    <h6>Created on {{date}}</h6>
+                    <a href="/hospital/delete-department/{{_id}}" class="btn btn-danger text-light">Delete
+                        Department</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <center>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No Departments Found !!!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>
