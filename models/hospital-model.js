@@ -11,7 +11,14 @@ const HospitalSchema = new mongoose.Schema({
         type: String,
         required: [true, "Must Provide email"],
         trim: true,
-        maxlength: [25, "email cannot be more than 25 characters"],
+        maxlength: [105, "email cannot be more than 105 characters"],
+        unique: true
+    },
+    password: {
+        type: String,
+        required: [true, "Must Provide password"],
+        trim: true,
+        maxlength: [300, "password cannot be more than 300 characters"],
         unique: true
     },
     phone: {
@@ -29,7 +36,7 @@ const HospitalSchema = new mongoose.Schema({
         type: String,
         required: [true, "Must Provide place"],
         trim: true,
-        maxlength: [125, "password cannot be more than 125 characters"]
+        maxlength: [225, "password cannot be more than 125 characters"]
     },
     departments: {
         type: Array,

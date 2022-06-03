@@ -16,7 +16,7 @@ const getLoginPage = async (req, res) => {
 }
 const doLogin = async (req, res) => {
     try {
-        console.log(req.body, req.body.password);
+        // console.log(req.body, req.body.password);
         let { password } = req.body;
         const admin = await AdminModel.findOne({ email: req.body.email });
         if (admin) {
@@ -49,6 +49,7 @@ const getHomePage = async (req, res) => {
 }
 const doLogout = (req, res) => {
     req.session.admin = false;
+    req.session.alertMessage = "Logged out successfully";
     res.redirect("/admin/login")
 }
 
@@ -57,8 +58,10 @@ const addHospitalPage = (req, res) => {
     res.render("admin/add-new-hospital")
 }
 const createHospital = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
+        const { password } = req.body;
+        req.body.password = await bcrypt.hash(password, 10)
         const hospital = await HospitalModel.create(req.body);
         let { image } = req.files;
         image.mv('./public/images/hospital/' + hospital._id + ".jpg").then((err) => {

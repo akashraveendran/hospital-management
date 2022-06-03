@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { getHomePage } = require("../controllers/hospital-controller")
+const { getHomePage, getLoginPage, doLogin } = require("../controllers/hospital-controller")
+const checkHospital = require("../middlewares/checkHospital")
 
 /* GET home page. */
-router.get('/', getHomePage);
-router.get('/login');
-router.post('/login');
+router.get('/', checkHospital, getHomePage);
+router.get('/login', getLoginPage);
+router.post('/login', doLogin);
 router.get('/view-profile');
 router.get('/view-all-departments');
-router.get('/add-department');
 router.get('/add-department');
 router.post('/add-department');
 router.get('/view-all-doctors');
