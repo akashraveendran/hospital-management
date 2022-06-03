@@ -30,7 +30,6 @@ const doLogin = async (req, res) => {
     }
 }
 
-
 module.exports = {
     getHomePage,
     getLoginPage,
