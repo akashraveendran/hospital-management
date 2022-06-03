@@ -1,14 +1,28 @@
 const HospitalModel = require("../models/hospital-model");
 const DepartmentModel = require("../models/department-model");
+const DoctorModel = require("../models/doctor-model");
 const bcrypt = require("bcrypt")
 
 
 
-const getHomePage = (req, res) => {
-    res.render('index', { title: 'Hospital' });
+const getHomePage = async (req, res) => {
+    const { hospital } = req.session
+    try {
+        let count = {};
+        count.departments = await DepartmentModel.count()
+        count.doctors = await DoctorModel.count()
+        // count.appoinments
+        res.render('hospital/profile', { title: 'Hospital', hospital, count });
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error Occured. Please Retry !!!";
+        res.redirect("/hospital/login")
+    }
 }
 const getLoginPage = (req, res) => {
-    res.render('hospital/login', { title: 'Hospital' });
+    let { alertMessage } = req.session
+    res.render('hospital/login', { title: 'Hospital', alertMessage });
+    delete req.session.alertMessage;
 }
 const doLogin = async (req, res) => {
     try {
@@ -70,20 +84,60 @@ const deleteDepartment = async (req, res) => {
         res.redirect("/hospital")
     }
 }
-const addNewDoctor = (req, res) => {
-
+const addNewDoctor = async (req, res) => {
+    try {
+        // console.log(req.body, req.files.image)
+        const doctor = await DoctorModel.create(req.body);
+        let { image } = req.files;
+        image.mv('./public/images/doctor/' + doctor._id + ".jpg").then((err) => {
+            if (!err) {
+                return res.redirect('/hospital/view-all-doctors')
+            }
+            res.redirect('/hospital/add-new-doctor')
+        })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/hospital/add-new-doctor")
+    }
 }
-const addDoctorPage = (req, res) => {
-
+const addDoctorPage = async (req, res) => {
+    try {
+        let departments = await DepartmentModel.find({})
+        res.render("hospital/add-doctor", { departments })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/hospital")
+    }
 }
-const viewAllDoctors = (req, res) => {
-
+const viewAllDoctors = async (req, res) => {
+    try {
+        let doctors = await DoctorModel.find({});
+        // console.log(doctors)
+        let { alertMessage } = req.session;
+        res.render("hospital/view-doctors", { doctors, alertMessage })
+        delete req.session.alertMessage;
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/hospital")
+    }
 }
-const deleteDoctor = (req, res) => {
-
+const deleteDoctor = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await DoctorModel.findOneAndDelete({ _id: id })
+        req.session.alertMessage = "Removed Doctor successfully !!!"
+        res.redirect('/hospital/view-all-doctors')
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error Occured Try again !!!"
+        res.redirect("/hospital")
+    }
 }
 const viewAppoinments = (req, res) => {
-
+    res.render("hospital/view-appoinments")
 }
 const acceptAppoinment = (req, res) => {
 

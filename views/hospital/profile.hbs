@@ -1,8 +1,209 @@
-{{!--
-navbar with update profile, view-doctors, viewappoinments, view departments,
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&display=swap');
 
-profile image,
-profile details,
-count of doctors, depts, and appoinments
-footer
---}}
+    .profile-header {
+        font-family: 'Anton', sans-serif;
+        margin-bottom: 20px;
+        color: rgb(32, 122, 85);
+        display: flex;
+        justify-content: space-between;
+        transition: all .22s ease;
+    }
+
+    .profile-header:hover {
+        color: rgb(196, 51, 51);
+    }
+
+
+    .profile-small-text {
+        font-weight: 200;
+        color: rgb(75, 74, 74);
+    }
+
+    .hospital-header {
+        font-size: 40px;
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 800;
+        color: #1da382;
+        font-family: 'Dancing Script', 'cursive';
+        text-decoration: underline;
+    }
+
+    .card1 {
+        transition: all .25s ease-in-out;
+        background: url('/images/dept-image.jpg');
+        background-size: cover;
+        opacity: .7
+    }
+
+    .card2 {
+        transition: all .25s ease-in-out;
+        background: url('/images/doctors-image.jpg');
+        background-size: cover;
+        opacity: .7
+    }
+
+    .card3 {
+        transition: all .25s ease-in-out;
+        background: url('/images/appoinment-image.jpg');
+        background-size: cover;
+        opacity: .7
+    }
+
+    .card1:hover,
+    .card2:hover,
+    .card3:hover {
+        transform: scale(1.1);
+        background: #bbf7f7;
+        cursor: pointer;
+        opacity: 1;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light"
+    style="background: linear-gradient(90deg, #0cebeb, #20e3b2, #29ffc6);">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-size: 33px;">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/hospital/view-all-doctors">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/hospital/view-all-appoinments">Appoinments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/hospital/view-all-departments ">Departments</a>
+                </li>
+
+            </ul>
+            <div class="d-flex">
+                <a href="/hospital/logout"><button class="btn btn-danger">Logout</button></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{{!-- carousel --}}
+
+<h1 class="hospital-header">Welcome {{hospital.hospitalName}}
+</h1>
+
+<div class="p-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+        style="max-width: 100vw;max-height:80vh;overflow:hidden">
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="object-fit: cover;width:100%;height:100%">
+                <img src="/images/hospital/{{hospital._id}}.jpg" class="d-block w-100" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<section id="map">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 100vh;">
+        <h2 class="title mt-5 mb-5 hospital-header" style="text-align: center;">
+            Profile Details
+        </h2>
+        <div class="card p-5">
+            <div class="container">
+                <h4 class="profile-header"><span class="profile-small-text">Name </span>{{hospital.hospitalName}}
+                </h4>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Email </span>{{hospital.email}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Phone </span>{{hospital.phone}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Place </span>{{hospital.place}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Description </span>{{hospital.description}}
+                </h6>
+                <hr>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{{!-- about us --}}
+
+<section id="map" style="background: linear-gradient(90deg, #0cebeb, #20e3b2, #29ffc6);">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 80vh;">
+        <h2 class="title mt-5 mb-5 "
+            style="text-align: center;font-family: 'Dancing Script', 'cursive';text-decoration: underline;">
+            Your Resources
+        </h2>
+        <div class="row">
+            <div class="col-4">
+                <div class="card p-5 card1">
+                    <div class="container  d-flex flex-column align-items-center">
+                        <h4><b>Departments</b></h4>
+                        <h2>{{count.departments}} </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card p-5 card2">
+                    <div class="container  d-flex flex-column align-items-center">
+                        <h4><b>Doctors</b></h4>
+                        <h2>{{count.doctors}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card p-5 card3">
+                    <div class="container d-flex flex-column align-items-center">
+                        <h4><b>Appoinments</b></h4>
+                        <h2>6 </h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section id="about">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 70vh;">
+        <h2 class="title mt-5 mb-5"
+            style="text-align: center;font-family: 'Dancing Script', 'cursive';text-decoration: underline;">
+            About This System
+        </h2>
+        <p class="about-para">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dicta veritatis, iusto sint similique ipsa sunt
+            eius nihil. Aspernatur beatae magni ipsam ducimus earum porro nostrum rem quidem vitae magnam, quo sed
+            officia fugiat voluptatem necessitatibus consectetur repudiandae iusto omnis laborum hic. A aperiam velit
+            maiores impedit nemo nulla maxime autem? Exercitationem eum commodi voluptatem corporis aut voluptates
+            veritatis magni nam aspernatur ut non placeat enim at, neque quidem nobis possimus minima dicta soluta.
+            Nihil quo neque ipsum voluptatem quisquam quia ipsam eos et eaque possimus debitis fuga ullam quas dolor
+            nisi alias libero, fugit asperiores consequuntur dignissimos laborum omnis. </p>
+    </div>
+</section>
+
+
+<footer class="bg-dark text-light d-flex flex-column justify-content-space-around" style="height: 30vh;">
+    <h2 class="title mt-5 mb-5" style="text-align: center;">
+        Contact us via
+    </h2>
+    <div class="icon-group d-flex justify-content-center">
+        <style>
+            i {
+                font-size: 30px;
+            }
+        </style>
+        <i class="fa-brands fa-twitter me-3"></i>
+        <i class="fa-brands fa-facebook me-3"></i>
+        <i class="fa-brands fa-instagram"></i>
+    </div>
+</footer>

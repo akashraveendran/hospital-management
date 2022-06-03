@@ -4,3 +4,67 @@ heading
 cards of all the doctors with image and delete button
 
 --}}
+
+{{!--
+navbar,with add new dept button
+heading
+cards of all the doctors with delete button
+
+--}}
+
+
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background: linear-gradient(90deg, #43cea2, #eef2f3);
+        backdrop-filter: blur(5px);
+    }
+
+    .navbar {
+        background: linear-gradient(90deg, #0cebeb, #20e3b2, #29ffc6);
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<nav class="navbar navbar-light bg-light mb-5 d-flex justify-content-space-between">
+    <h1 class="ms-3">doctors</h1>
+    <a class="btn btn-danger me-5 p-2 text-light" href="/hospital" style="text-decoration: none;">Back</a>
+</nav>
+
+<div class="container library">
+    <div class="row justify-content-end mb-5">
+        <div class="col-3 d-flex justify-content-end">
+            <a href="/hospital/add-new-doctor" class="btn btn-success p-3 text-light">Add New Doctor</a>
+        </div>
+    </div>
+    <div class="row">
+        {{#if doctors}}
+        {{#each doctors}}
+        <div class="col-4">
+            <div class="card p-1 m-3">
+                <img src="/images/doctor/{{_id}}.jpg" class="image">
+                <div class="container">
+                    <h4><b>{{doctorName}}</b></h4>
+                    <h6 class="text-primary">Department {{department}} </h6>
+                    <h6 class="text-danger">Specialised in {{specialisation}} </h6>
+                    <h6>Bio : {{bio}} </h6>
+                    <a href="/hospital/delete-doctor/{{_id}}" class="btn btn-danger text-light mt-3">Remove
+                        Doctor</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <center>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No doctors Found !!!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>
