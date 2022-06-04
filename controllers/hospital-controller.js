@@ -57,6 +57,12 @@ const addNewDepartment = async (req, res) => {
     try {
         req.body.date = new Date().toLocaleDateString();
         let dept = await DepartmentModel.create(req.body);
+        let { hospital } = req.session;
+        let { _id } = hospital;
+        hospital.departments.push({ id: dept._id, deptName: dept.department });
+        delete hospital._id;
+        let newhospital = await HospitalModel.findOneAndUpdate({ _id }, hospital, { new: true })
+        req.session.hospital = newhospital;
         req.session.alertMessage = "Added Department"
         res.redirect("/hospital/view-all-departments")
     } catch (error) {
@@ -94,8 +100,14 @@ const addNewDoctor = async (req, res) => {
         // console.log(req.body, req.files.image)
         const doctor = await DoctorModel.create(req.body);
         let { image } = req.files;
-        image.mv('./public/images/doctor/' + doctor._id + ".jpg").then((err) => {
+        image.mv('./public/images/doctor/' + doctor._id + ".jpg").then(async (err) => {
             if (!err) {
+                let { hospital } = req.session;
+                let { _id } = hospital;
+                hospital.doctors.push({ id: doctor._id, doctorName: doctor.doctorName });
+                delete hospital._id;
+                let newhospital = await HospitalModel.findOneAndUpdate({ _id }, hospital, { new: true })
+                req.session.hospital = newhospital;
                 return res.redirect('/hospital/view-all-doctors')
             }
             res.redirect('/hospital/add-new-doctor')
