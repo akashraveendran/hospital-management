@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-
-
 const MessageSchema = new mongoose.Schema({
     to: {
         type: String,
@@ -15,7 +13,5 @@ const MessageSchema = new mongoose.Schema({
     date: String,
     time: String
 })
-
-
 
 module.exports = mongoose.model("message", MessageSchema);

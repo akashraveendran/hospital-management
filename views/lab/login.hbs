@@ -1,0 +1,27 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #093028, #237A57);
+    }
+
+    .login-page {
+        background: #ffffff;
+        height: 80vh;
+    }
+</style>
+
+<div class="login-page">
+    <div class="login-image">
+        <img src="https://wallpaperaccess.com/full/909067.jpg" alt="">
+    </div>
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: #093028;">Laboratory Login</h2>
+        </div>
+        <form class="login-form" action="/lab/login" method="post">
+            <input type="email" placeholder="email" name="email" />
+            <input type="password" placeholder="password" name="password" />
+            <button type="submit" style="background: #093028;">Login</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #093028, #237A57)
+    }
+</style>
+
+<div class="login-page" style="width: 70vw;">
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: #093028;">Add New Test</h2>
+        </div>
+        <form class="login-form" action="/lab/add-new-test" method="post" enctype="multipart/form-data">
+            <input type="text" name="testName" placeholder="Test Name" required />
+            <input type="number" name="price" placeholder="price in INR" required />
+            <textarea name="description" placeholder="Short description about the test" id="" cols="10" rows="5"
+                required></textarea>
+            <button type="submit" style="background: #237A57;">Submit </button>
+            <a href="/lab" class="font-weight-bold" style="text-decoration: none;">Back</a>
+        </form>
+    </div>
+</div>

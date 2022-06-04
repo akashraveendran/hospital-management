@@ -1,0 +1,50 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background-color: rgba(209, 255, 245, 0.45);
+        backdrop-filter: blur(5px);
+    }
+
+    .navbar {
+        background: linear-gradient(90deg, #093028, #237A57);
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<nav class="navbar navbar-light text-light mb-5 d-flex justify-content-space-between">
+    <h1 class="ms-3">Hospitals</h1>
+    <a class="btn-danger me-5 p-2" href="/lab" style="text-decoration: none;">Back</a>
+</nav>
+
+<div class="container library">
+    <div class="row">
+        {{#if hospitals}}
+        {{#each hospitals}}
+        <div class="col-6">
+            <div class="card p-5">
+                <div class="container">
+                    <h4><b>{{hospitalName}}</b></h4>
+                    <h6>{{email}} </h6>
+                    <h6>{{phone}} </h6>
+                    <h6>{{description}}</h6>
+                    <h6>Departments {{total_dept}}</h6>
+                    <h6>Doctors {{total_doctors}}</h6>
+
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <center>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No Hospitals Found !!!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>

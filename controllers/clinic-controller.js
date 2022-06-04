@@ -53,7 +53,7 @@ const updateProfile = async (req, res) => {
                     return res.redirect('/clinic')
                 } else {
                     console.log(err);
-                    req.session.alertMessage = "Error Occured while uploading image again !!!"
+                    req.session.alertMessage = "Error Occured while uploading image Try again !!!"
                     res.redirect("/clinic")
                 }
             })
