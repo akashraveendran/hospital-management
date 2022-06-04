@@ -31,6 +31,10 @@ const ClinicSchema = new mongoose.Schema({
         trim: true,
         maxlength: [125, "password cannot be more than 125 characters"]
     },
+    password: {
+        type: String,
+        required: true
+    },
     openingTime: String,
     closingTime: String
 })

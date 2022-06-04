@@ -1,19 +1,28 @@
 const express = require('express');
 const router = express.Router();
 
-const { getHomePage } = require("../controllers/clinic-controller")
+const { getHomePage,
+    getLoginPage,
+    doLogin,
+    doLogout,
+    updateProfilePage,
+    viewAppoinments,
+    acceptAppoinment,
+    rejectAppoinment,
+    completeAppoinment,
+    updateProfile } = require("../controllers/clinic-controller")
+const checkClinic = require("../middlewares/checkClinic")
 
 /* GET home page. */
-router.get('/', getHomePage);
-router.get('/login');
-router.post('/login');
-router.get('/profile');
-router.get('/update-profile');
-router.post('/update-profile');
-router.post('/update-timings');
-router.get('/view-all-appoinments');
-router.get('/accept-appoinment/:id');
-router.get('/reject-appoinment/:id');
-router.get('/completed-ckeckup/:id');
+router.get('/', checkClinic, getHomePage);
+router.get('/login', getLoginPage);
+router.post('/login', doLogin);
+router.get('/logout', checkClinic, doLogout);
+router.get('/update-profile', checkClinic, updateProfilePage);
+router.post('/update-profile', checkClinic, updateProfile);
+router.get('/view-all-appoinments', checkClinic, viewAppoinments);
+router.get('/accept-appoinment/:id', checkClinic, acceptAppoinment);
+router.get('/reject-appoinment/:id', checkClinic, rejectAppoinment);
+router.get('/completed-ckeckup/:id', checkClinic, completeAppoinment);
 
 module.exports = router;

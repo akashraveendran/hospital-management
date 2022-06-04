@@ -119,6 +119,8 @@ const addClinicPage = (req, res) => {
 const createClinic = async (req, res) => {
     console.log(req.body)
     try {
+        const { password } = req.body;
+        req.body.password = await bcrypt.hash(password, 10)
         const clinic = await ClinicModel.create(req.body);
         let { image } = req.files;
         image.mv('./public/images/clinic/' + clinic._id + ".jpg").then((err) => {

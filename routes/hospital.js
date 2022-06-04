@@ -15,13 +15,15 @@ const { getHomePage,
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment } = require("../controllers/hospital-controller")
+    completeAppoinment,
+    doLogout } = require("../controllers/hospital-controller")
 const checkHospital = require("../middlewares/checkHospital")
 
 /* GET home page. */
 router.get('/', checkHospital, getHomePage);
 router.get('/login', getLoginPage);
 router.post('/login', doLogin);
+router.get('/logout', doLogout);
 // router.get('/view-profile');
 router.get('/view-all-departments', checkHospital, viewAllDepartment);
 router.get('/add-department', checkHospital, addDepartmentPage);

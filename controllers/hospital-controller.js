@@ -44,6 +44,11 @@ const doLogin = async (req, res) => {
         res.redirect("/hospital/login")
     }
 }
+const doLogout = (req, res) => {
+    req.session.hospital = false;
+    req.session.alertMessage = "Logged out successfully";
+    res.redirect("/hospital/login")
+}
 const addDepartmentPage = (req, res) => {
     res.render("hospital/add-department")
 }
@@ -165,5 +170,6 @@ module.exports = {
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment
+    completeAppoinment,
+    doLogout
 }

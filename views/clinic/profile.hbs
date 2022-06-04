@@ -1,0 +1,189 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&display=swap');
+
+    .profile-header {
+        font-family: 'Anton', sans-serif;
+        margin-bottom: 20px;
+        color: #56ab2f;
+        display: flex;
+        justify-content: space-between;
+        transition: all .22s ease;
+    }
+
+    .profile-header:hover {
+        color: rgb(196, 51, 51);
+    }
+
+
+    .profile-small-text {
+        font-weight: 200;
+        color: rgb(75, 74, 74);
+    }
+
+    .clinic-header {
+        font-size: 40px;
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 800;
+        color: #56ab2f;
+        font-family: 'Dancing Script', 'cursive';
+        text-decoration: underline;
+    }
+
+    .card1,
+    .card2 {
+        background: ;
+        transition: all .5s ease-in-out;
+    }
+
+    .card1:hover,
+    .card2:hover {
+        transform: scale(1.1);
+        background: #ffffff;
+        cursor: pointer;
+        opacity: 1;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:  linear-gradient(90deg, #56ab2f, #a8e063)">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-size: 33px;">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/clinic/view-all-appoinments">Appoinments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/clinic/update-profile">Update Profile</a>
+                </li>
+
+
+            </ul>
+            <div class="d-flex">
+                <a href="/clinic/logout"><button class="btn btn-danger">Logout</button></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{{!-- carousel --}}
+
+<h1 class="clinic-header">Welcome Dr. {{clinic.doctorName}}
+</h1>
+
+<div class="p-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+        style="max-width: 100vw;max-height:80vh;overflow:hidden">
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="object-fit: cover;width:100%;height:100%">
+                <img src="/images/clinic/{{clinic._id}}.jpg" class="d-block w-100" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<section id="map">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 100vh;">
+        <h2 class="title mt-5 mb-5 clinic-header" style="text-align: center;">
+            Profile Details
+        </h2>
+        <div class="card p-5">
+            <div class="container">
+                <h4 class="profile-header"><span class="profile-small-text">Name </span>{{clinic.doctorName}}
+                </h4>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Email </span>{{clinic.email}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Phone </span>{{clinic.phone}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Place </span>{{clinic.place}} </h6>
+                <hr>
+                <h6 class="profile-header"><span class="profile-small-text">Description </span>{{clinic.description}}
+                </h6>
+                <hr>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{{!-- about us --}}
+
+<section id="map" style="background: linear-gradient(90deg, #a8e063, #56ab2f);">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 80vh;">
+        <h2 class="title mt-5 mb-5 "
+            style="text-align: center;font-family: 'Dancing Script', 'cursive';text-decoration: underline;">
+            Your Timings
+        </h2>
+        <div class="row">
+            <div class="col-6">
+                <div class="card p-5 card1">
+                    <div class="container  d-flex flex-column align-items-center">
+                        <h4><b>Opening Time</b></h4>
+                        <h2>{{clinic.openingTime}} </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card p-5 card2">
+                    <div class="container  d-flex flex-column align-items-center">
+                        <h4><b>Closing Time</b></h4>
+                        <h2>{{clinic.closingTime}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row d-flex justify-content-center mt-5">
+            <div class="col-3">
+
+                <a href="/clinic/update-profile" class="btn btn-outline-light pe-5 ps-5 ">update
+                    timings</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="about">
+    <div class="container d-flex flex-column justify-content-space-around" style="height: 70vh;">
+        <h2 class="title mt-5 mb-5"
+            style="text-align: center;font-family: 'Dancing Script', 'cursive';text-decoration: underline;">
+            About This System
+        </h2>
+        <p class="about-para">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dicta veritatis, iusto sint similique ipsa sunt
+            eius nihil. Aspernatur beatae magni ipsam ducimus earum porro nostrum rem quidem vitae magnam, quo sed
+            officia fugiat voluptatem necessitatibus consectetur repudiandae iusto omnis laborum hic. A aperiam velit
+            maiores impedit nemo nulla maxime autem? Exercitationem eum commodi voluptatem corporis aut voluptates
+            veritatis magni nam aspernatur ut non placeat enim at, neque quidem nobis possimus minima dicta soluta.
+            Nihil quo neque ipsum voluptatem quisquam quia ipsam eos et eaque possimus debitis fuga ullam quas dolor
+            nisi alias libero, fugit asperiores consequuntur dignissimos laborum omnis. </p>
+    </div>
+</section>
+
+
+<footer class="bg-dark text-light d-flex flex-column justify-content-space-around" style="height: 30vh;">
+    <h2 class="title mt-5 mb-5" style="text-align: center;">
+        Contact us via
+    </h2>
+    <div class="icon-group d-flex justify-content-center">
+        <style>
+            i {
+                font-size: 30px;
+            }
+        </style>
+        <i class="fa-brands fa-twitter me-3"></i>
+        <i class="fa-brands fa-facebook me-3"></i>
+        <i class="fa-brands fa-instagram"></i>
+    </div>
+</footer>

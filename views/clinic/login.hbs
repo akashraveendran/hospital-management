@@ -1,0 +1,28 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #56ab2f, #a8e063);
+    }
+
+    .login-page {
+        background: #ffffff;
+        height: 80vh;
+    }
+</style>
+
+<div class="login-page">
+    <div class="login-image">
+        <img src="https://thumbs.dreamstime.com/b/smiling-receptionist-clinic-young-practitioner-doctor-working-reception-desk-answering-phone-calls-scheduling-72629826.jpg"
+            alt="">
+    </div>
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: #5d7c36;">Clinic Login</h2>
+        </div>
+        <form class="login-form" action="/clinic/login" method="post">
+            <input type="email" placeholder="email" name="email" />
+            <input type="password" placeholder="password" name="password" />
+            <button type="submit" style="background: #8abb4f;">Login</button>
+        </form>
+    </div>
+</div>
