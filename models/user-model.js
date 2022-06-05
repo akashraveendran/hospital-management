@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 
-const DoctorModel = new mongoose.Schema({
-    doctorName: {
+const UserSchema = new mongoose.Schema({
+    userName: {
         type: String,
         required: [true, "Must Provide name"],
         trim: true,
@@ -11,7 +11,7 @@ const DoctorModel = new mongoose.Schema({
         type: String,
         required: [true, "Must Provide email"],
         trim: true,
-        maxlength: [105, "email cannot be more than 105 characters"],
+        maxlength: [25, "email cannot be more than 25 characters"],
         unique: true
     },
     phone: {
@@ -20,28 +20,21 @@ const DoctorModel = new mongoose.Schema({
         trim: true,
         maxlength: [13, "phone no cannot be more than 25 characters"]
     },
-    bio: {
+    age: {
         type: String,
-        required: [true, "Must Provide bio"],
+        required: [true, "Must Provide phone-no"],
         trim: true,
+        maxlength: [5, "age no cannot be more than 5 characters"]
     },
     address: {
         type: String,
         required: [true, "Must Provide address"],
         trim: true,
     },
-    department: {
-        type: String,
-        required: true
-    },
-    specialisation: {
-        type: String,
-        required: true
-    },
-    hospitalId: {
+    password: {
         type: String,
         required: true
     }
 })
 
-module.exports = mongoose.model('doctor', DoctorModel);
+module.exports = mongoose.model('user', UserSchema);

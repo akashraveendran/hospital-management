@@ -1,0 +1,27 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #d3d3e4, #888888);
+    }
+
+    .login-page {
+        background: #ffffff;
+        height: 80vh;
+    }
+</style>
+
+<div class="login-page">
+    <div class="login-image">
+        <img src="https://www.asterdmhealthcare.com/fileadmin/_processed_/4/c/csm_global-netwok_4300b8837b.png" alt="">
+    </div>
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: rgba(63, 62, 62, 0.533);">User Login</h2>
+        </div>
+        <form class="login-form" action="/login" method="post">
+            <input type="email" placeholder="email" name="email" />
+            <input type="password" placeholder="password" name="password" />
+            <button type="submit" style="background: #888;">Login</button>
+        </form>
+    </div>
+</div>

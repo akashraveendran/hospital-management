@@ -1,0 +1,27 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #d3d3e4, #888888);
+    }
+</style>
+
+<div class="login-page" style="width: 70vw;">
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: #2c3e50;">User Signup</h2>
+        </div>
+        <form class="login-form" action="/signup" method="post" enctype="multipart/form-data">
+            <input type="text" name="userName" placeholder="Enter User Name" required />
+            <input type="number" name="age" placeholder="Age (in years)" required />
+            <textarea name="address" placeholder="Address" id="" cols="10" rows="5" required></textarea>
+            <input type="number" name="phone" placeholder="Phone No" required />
+            <input type="email" name="email" placeholder="Email Id" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <label for="">Upload Image</label>
+            <input type="file" accept="" name="image" required>
+
+            <button type="submit" style="background: #237A57;">SUBMIT</button>
+            <a href="/" class="font-weight-bold" style="text-decoration: none;">Back</a>
+        </form>
+    </div>
+</div>

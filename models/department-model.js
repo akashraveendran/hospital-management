@@ -6,7 +6,11 @@ const departmentSchema = new mongoose.Schema({
     department: String,
     shortName: String,
     description: String,
-    date: String
+    date: String,
+    hospitalId: {
+        type: String,
+        required: true
+    }
 })
 
 

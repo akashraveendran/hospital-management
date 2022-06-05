@@ -1,0 +1,69 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background-color: rgba(209, 255, 245, 0.45);
+        backdrop-filter: blur(5px);
+    }
+
+    .card:hover {
+        transform: scale(1.01);
+    }
+
+    .navbar {
+        background: linear-gradient(90deg, #d3d3e4, #888888);
+    }
+
+    a {
+        text-decoration: none;
+        transition: all .25s;
+
+    }
+
+    .navbar .text-light:hover {
+        background: rgb(255, 54, 54);
+        border-radius: 10px;
+    }
+
+    .ms-3 {
+        font-size: 23px;
+    }
+</style>
+
+<nav class="navbar navbar-light bg-light mb-5 d-flex justify-content-space-between">
+    <h1 class="ms-3">Available Clinics</h1>
+    <a class="text-light me-5 p-2" href="/hospital" style="text-decoration: none;">Back</a>
+</nav>
+
+<div class="container library">
+
+    <div class="row">
+        {{#if clinics}}
+        {{#each clinics}}
+        <div class="col-12  card m-3">
+            <div class="p-1">
+                <img style="width: 100%;height:100%" src="/images/clinic/{{_id}}.jpg" alt="">
+            </div>
+            <div class="p-1">
+                <div class="container">
+                    <h5>Doctor's Name : <b>{{doctorName}}</b></h5>
+                    <h6>Place : {{place}} </h6>
+                    <h6> About : {{description}} </h6>
+                    <h6>Opens at {{openingTime}} </h6>
+                    <h6>Opens at {{closingTime}} </h6>
+                    <a href="/hospital/book-clinic/{{_id}}" class="btn btn-primary text-light mt-3 mb-3">Make an
+                        appoinment</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <center>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No clinics Found !!!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>

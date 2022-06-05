@@ -1,24 +1,39 @@
 const express = require('express');
 const router = express.Router();
 
-const { getHomePage } = require("../controllers/user-controller")
+const {
+    getHomePage,
+    getSignupPage,
+    doSignup,
+    getLoginPage,
+    doLogin,
+    logout,
+    updateProfilePage,
+    updateProfile,
+    getHospitals,
+    getClinics,
+    getSingleHospital,
+    getLabs } = require("../controllers/user-controller");
+const checkUser = require("../middlewares/checkUser")
 
-/* GET home page. */
-router.get('/', getHomePage);
-router.get('/signup');
-router.post('/signup');
-router.get('/login');
-router.post('/login');
-router.get('/view-profile');
-router.get('/update-profile');
-router.post('/update-profile');
-router.get('/view-hospitals');
-router.get('/view-clinics');
+
+router.get('/', checkUser, getHomePage);
+router.get('/signup', getSignupPage);
+router.post('/signup', doSignup);
+router.get('/login', getLoginPage);
+router.post('/login', doLogin);
+router.get('/logout', checkUser, logout);
+router.get('/update-profile', checkUser, updateProfilePage);
+router.post('/update-profile', checkUser, updateProfile);
+router.get('/view-hospitals', checkUser, getHospitals);
+router.get('/view-hospital/:id', checkUser, getSingleHospital);
+router.get('/view-clinics', checkUser, getClinics);
+router.get('/view-labs', checkUser, getLabs);
 router.post('/search');//get the searched category from req.body
-router.get('/book-hospital/:id');
-router.get('/book-clinic/:id');
-router.get('/view-messages');
-router.get('/send-message');
-router.post('/send-message');
+router.get('/book-doctor/:id', checkUser);
+router.get('/book-clinic/:id', checkUser);
+router.get('/view-messages', checkUser);
+router.get('/send-message', checkUser);
+router.post('/send-message', checkUser);
 
 module.exports = router;
