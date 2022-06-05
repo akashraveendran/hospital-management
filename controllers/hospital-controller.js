@@ -4,7 +4,6 @@ const DoctorModel = require("../models/doctor-model");
 const bcrypt = require("bcrypt")
 
 
-
 const getHomePage = async (req, res) => {
     const { hospital } = req.session
     try {
@@ -55,10 +54,11 @@ const addDepartmentPage = (req, res) => {
 const addNewDepartment = async (req, res) => {
     console.log(req.body);
     try {
-        req.body.date = new Date().toLocaleDateString();
-        let dept = await DepartmentModel.create(req.body);
         let { hospital } = req.session;
         let { _id } = hospital;
+        req.body.hospitalId = _id;
+        req.body.date = new Date().toLocaleDateString();
+        let dept = await DepartmentModel.create(req.body);
         hospital.departments.push({ id: dept._id, deptName: dept.department });
         delete hospital._id;
         let newhospital = await HospitalModel.findOneAndUpdate({ _id }, hospital, { new: true })
@@ -98,12 +98,13 @@ const deleteDepartment = async (req, res) => {
 const addNewDoctor = async (req, res) => {
     try {
         // console.log(req.body, req.files.image)
+        let { hospital } = req.session;
+        let { _id } = hospital;
+        req.body.hospitalId = _id;
         const doctor = await DoctorModel.create(req.body);
         let { image } = req.files;
         image.mv('./public/images/doctor/' + doctor._id + ".jpg").then(async (err) => {
             if (!err) {
-                let { hospital } = req.session;
-                let { _id } = hospital;
                 hospital.doctors.push({ id: doctor._id, doctorName: doctor.doctorName });
                 delete hospital._id;
                 let newhospital = await HospitalModel.findOneAndUpdate({ _id }, hospital, { new: true })
