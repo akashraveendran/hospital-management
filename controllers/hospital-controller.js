@@ -1,6 +1,7 @@
 const HospitalModel = require("../models/hospital-model");
 const DepartmentModel = require("../models/department-model");
 const DoctorModel = require("../models/doctor-model");
+const AppoinmentModel = require("../models/appoinment-model");
 const bcrypt = require("bcrypt")
 
 
@@ -154,19 +155,39 @@ const deleteDoctor = async (req, res) => {
         res.redirect("/hospital")
     }
 }
-const viewAppoinments = (req, res) => {
-    res.render("hospital/view-appoinments")
+const viewAppoinments = async (req, res) => {
+    try {
+        let { _id } = req.session.hospital
+        let appoinments = await AppoinmentModel.find({ hospitalId: _id });
+        res.render("hospital/view-appoinments", { appoinments })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/hospital");
+    }
 }
-const acceptAppoinment = (req, res) => {
-
+const acceptAppoinment = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await AppoinmentModel.findOneAndUpdate({ _id: id }, { $set: { status: "Hospital accepted", accepted: true } });
+        res.redirect("/view-appoinments")
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/hospital");
+    }
 }
-const rejectAppoinment = (req, res) => {
-
+const rejectAppoinment = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await AppoinmentModel.findOneAndUpdate({ _id: id }, { $set: { status: "Hospital rejected " } });
+        res.redirect("/view-appoinments")
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/hospital");
+    }
 }
-const completeAppoinment = (req, res) => {
-
-}
-
 
 module.exports = {
     getHomePage,
@@ -183,6 +204,5 @@ module.exports = {
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment,
     doLogout
 }

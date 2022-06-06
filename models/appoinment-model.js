@@ -54,6 +54,10 @@ const AppoinmentSchema = new mongoose.Schema({
     }, status: {
         type: String,
         default: "waiting list"
+    },
+    accepted: {
+        type: Boolean,
+        default: false
     }
 })
 

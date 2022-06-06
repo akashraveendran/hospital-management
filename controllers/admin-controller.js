@@ -2,6 +2,9 @@ const AdminModel = require("../models/admin-model");
 const bcrypt = require("bcrypt")
 const HospitalModel = require("../models/hospital-model");
 const ClinicModel = require("../models/clinic-model");
+const UserModel = require("../models/user-model")
+const LabModel = require("../models/laboratory-model")
+const AppoinmentModel = require("../models/appoinment-model");
 const MessageModel = require("../models/message-model")
 
 
@@ -40,6 +43,9 @@ const getHomePage = async (req, res) => {
         count.hospital = await HospitalModel.count();
         count.clinic = await ClinicModel.count();
         count.message = await MessageModel.count();
+        count.user = await UserModel.count();
+        count.appoinment = await AppoinmentModel.count();
+        count.lab = await LabModel.count();
         res.render('admin/admin-dashboard', { title: 'Admin-dashbard', count });
     } catch (error) {
         console.log(error);
@@ -184,18 +190,37 @@ const deleteMessage = async (req, res) => {
         res.redirect("/admin")
     }
 }
-
-const viewCheckupDatesPage = (req, res) => {
-    res.render("admin/view-checkup-dates")
+const viewCheckupDatesPage = async (req, res) => {
+    try {
+        let appoinments = await AppoinmentModel.find({});
+        res.render("admin/view-checkup-dates", { appoinments })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin");
+    }
 }
-const viewAllUsersPage = (req, res) => {
-    res.render("admin/view-all-users")
+const viewAllUsersPage = async (req, res) => {
+    try {
+        let users = await UserModel.find({});
+        res.render("admin/view-all-users", { users })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin");
+    }
 }
-const deleteUser = (req, res) => {
-    res.send("delete user")
+const deleteUser = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let users = await UserModel.findOneAndDelete({ _id: id });
+        res.render("admin/view-all-users", { users })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin");
+    }
 }
-
-
 
 
 module.exports = {

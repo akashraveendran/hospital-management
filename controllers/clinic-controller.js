@@ -1,4 +1,5 @@
 const ClinicModel = require("../models/clinic-model");
+const AppoinmentModel = require("../models/appoinment-model");
 const bcrypt = require("bcrypt")
 
 
@@ -67,18 +68,40 @@ const updateProfile = async (req, res) => {
         res.redirect("/clinic")
     }
 }
-const viewAppoinments = (req, res) => {
-
+const viewAppoinments = async (req, res) => {
+    try {
+        let { _id } = req.session.clinic
+        let appoinments = await AppoinmentModel.find({ clinicId: _id });
+        res.render("clinic/view-appoinments", { appoinments })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/clinic");
+    }
 }
-const acceptAppoinment = (req, res) => {
-
+const acceptAppoinment = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await AppoinmentModel.findOneAndUpdate({ _id: id }, { $set: { status: "Clinic accepted", accepted: true } });
+        res.redirect("/clinic/view-all-appoinments")
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/clinic");
+    }
 }
-const rejectAppoinment = (req, res) => {
-
+const rejectAppoinment = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await AppoinmentModel.findOneAndUpdate({ _id: id }, { $set: { status: "Clinic rejected " } });
+        res.redirect("/clinic/view-all-appoinments")
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/clinic");
+    }
 }
-const completeAppoinment = (req, res) => {
 
-}
 
 
 
@@ -91,6 +114,5 @@ module.exports = {
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment,
     updateProfile
 }

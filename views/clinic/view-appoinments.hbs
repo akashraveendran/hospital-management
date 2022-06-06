@@ -1,0 +1,79 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background-color: rgba(209, 255, 245, 0.45);
+        backdrop-filter: blur(5px);
+    }
+
+    .card:hover {
+        transform: scale(1.0001);
+    }
+
+    .navbar {
+        background: linear-gradient(90deg, #d3d3e4, #888888);
+    }
+
+    a {
+        text-decoration: none;
+        transition: all .25s;
+
+    }
+
+    .navbar .text-light:hover {
+        background: rgb(255, 54, 54);
+        border-radius: 10px;
+    }
+
+    .ms-3 {
+        font-size: 23px;
+    }
+
+    .btn-outline-danger {
+        color: red
+    }
+
+    .btn-outline-success {
+        color: green;
+    }
+</style>
+<nav class="navbar navbar-light bg-light mb-5 d-flex justify-content-space-between">
+    <h1 class="ms-3">Your Appoinments</h1>
+    <a class="text-light me-5 p-2" href="/clinic" style="text-decoration: none;">Back</a>
+</nav>
+
+<div class="container library">
+    <div class="row">
+        {{#if appoinments}}
+        {{#each appoinments}}
+        <div class="col-12  card m-3">
+            <div class="p-3">
+                <div class="container">
+                    <h5>Patient Name: <b style="color: green;">{{patientName}}</b></h5>
+                    <h5>Patient email: <b>{{patientEmail}}</b></h5>
+                    <h5>Patient age: {{patientAge}}</h5>
+                    <h6> Date : {{date}} </h6>
+                    <h6> time : {{time}} </h6>
+                    <h6>Appoinment status : <b style="font-weight:700;text-decoration:underline">{{status}} </b></h6>
+                    {{#if accepted}}
+                    <p class="text-success font-weight-bold">Accepted</p>
+                    {{else}}
+                    <a href="/clinic/accept-appoinment/{{_id}}" class="btn btn-outline-success mt-3 mb-3">
+                        accept appoinment</a>
+                    <a href="/clinic/reject-appoinment/{{_id}}" class="btn btn-outline-danger mt-3 mb-3">
+                        Reject appoinment</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <center>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No Appoinments Found !!!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>

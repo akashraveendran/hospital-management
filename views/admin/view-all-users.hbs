@@ -3,6 +3,10 @@
     body {
         background: linear-gradient(90deg, #bdc3c7, #2c3e50);
     }
+
+    .form {
+        width: 100%
+    }
 </style>
 
 <div class="login-page" style="width: 80vw">
@@ -18,7 +22,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Place</th>
+                    <th>Address</th>
                     <th>Phone</th>
                     <th>operations</th>
                 </tr>
@@ -28,12 +32,12 @@
                 <tr>
                     <td>{{userName}}</td>
                     <td>{{email}}</td>
-                    <td>{{place}}</td>
+                    <td>{{address}}</td>
                     <td>{{phone}}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="/admin/delete-hospital/{{_id}}"
-                                onclick="return confirm('Are you sure you want to delete this hospital?');"><button
+                            <a href="/admin/delete-user/{{_id}}"
+                                onclick="return confirm('Are you sure you want to delete this user?');"><button
                                     class="btn" style="background: red;font-weight:600;">delete</button></a>
                         </div>
 

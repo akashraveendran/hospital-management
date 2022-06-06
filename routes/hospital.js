@@ -15,7 +15,6 @@ const { getHomePage,
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment,
     doLogout } = require("../controllers/hospital-controller")
 const checkHospital = require("../middlewares/checkHospital")
 
@@ -36,6 +35,5 @@ router.get('/delete-doctor/:id', checkHospital, deleteDoctor);
 router.get('/view-all-appoinments', checkHospital, viewAppoinments);
 router.get('/accept-appoinment/:id', checkHospital, acceptAppoinment);
 router.get('/reject-appoinment/:id', checkHospital, rejectAppoinment);
-router.get('/completed-appoinment/:id', checkHospital, completeAppoinment);
 
 module.exports = router;

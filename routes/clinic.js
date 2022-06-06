@@ -9,7 +9,6 @@ const { getHomePage,
     viewAppoinments,
     acceptAppoinment,
     rejectAppoinment,
-    completeAppoinment,
     updateProfile } = require("../controllers/clinic-controller")
 const checkClinic = require("../middlewares/checkClinic")
 
@@ -23,6 +22,5 @@ router.post('/update-profile', checkClinic, updateProfile);
 router.get('/view-all-appoinments', checkClinic, viewAppoinments);
 router.get('/accept-appoinment/:id', checkClinic, acceptAppoinment);
 router.get('/reject-appoinment/:id', checkClinic, rejectAppoinment);
-router.get('/completed-ckeckup/:id', checkClinic, completeAppoinment);
 
 module.exports = router;
