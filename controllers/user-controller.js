@@ -6,10 +6,13 @@ const DepartmentModel = require("../models/department-model");
 const LabModel = require("../models/laboratory-model");
 const MessageModel = require("../models/message-model");
 const DoctorModel = require("../models/doctor-model");
+const AppoinmentModel = require("../models/appoinment-model");
 
 
 const getHomePage = (req, res) => {
-    res.render('index', { title: 'user' });
+    const { user, alertMessage } = req.session
+    res.render('user/profile', { title: 'User', user, alertMessage });
+    delete req.session.alertMessage;
 }
 const getSignupPage = (req, res) => {
     let { alertMessage } = req.session
@@ -142,7 +145,7 @@ const getSingleHospital = async (req, res) => {
         let hospital = await HospitalModel.findOne({ _id: id })
         let doctors = await DoctorModel.find({ hospitalId: id })
         let departments = await DepartmentModel.find({ hospitalId: id })
-        res.render("user/view-hospital", { hospital, doctors, departments })
+        res.render("user/view-doctors", { hospital, doctors, departments })
     } catch (error) {
         console.log(error)
         req.session.alertMessage = "Error occured please try again"
@@ -150,7 +153,83 @@ const getSingleHospital = async (req, res) => {
     }
 }
 
+const bookClinicPage = async (req, res) => {
+    let { id } = req.params;
+    try {
+        let clinic = await ClinicModel.findOne({ _id: id })
+        res.render("user/book-clinic", { clinic })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/")
+    }
+}
+const bookClinic = async (req, res) => {
+    let { id } = req.params;
+    try {
+        req.body.clinic = true;
+        req.body.clinicId = id;
+        req.body.patientId = req.session.user._id
+        let clinic = await AppoinmentModel.create(req.body)
+        req.session.alertMessage = "Successfully requested your appoinment .Please wait for the clinic to respond to your request"
+        res.redirect("/view-clinics")
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/")
+    }
+}
+const bookHospitalPage = async (req, res) => {
+    let { id } = req.params;
+    try {
+        let doctor = await DoctorModel.findOne({ _id: id })
+        res.render("user/book-hospital", { doctor })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/")
+    }
+}
+const bookHospital = async (req, res) => {
+    let { id } = req.params;
+    try {
+        req.body.hospital = true;
+        req.body.hospitalId = id;
+        req.body.patientId = req.session.user._id;
+        await AppoinmentModel.create(req.body)
+        req.session.alertMessage = "Successfully requested your appoinment .Please wait for the hospital to respond to your request"
+        res.redirect("/view-hospitals")
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured while making appoinment please try again"
+        res.redirect("/")
+    }
+}
 
+const getAppoinments = async (req, res) => {
+    try {
+        let { _id } = req.session.user
+        let appoinments = await AppoinmentModel.find({ patientId: _id });
+        // console.log(appoinments)
+        res.render("user/view-appoinments", { appoinments })
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/");
+    }
+}
+
+const cancelAppoinment = async (req, res) => {
+    try {
+        let { id } = req.params;
+        await AppoinmentModel.findOneAndUpdate({ _id: id }, { $set: { status: "patient canceled" } });
+        res.redirect("/view-appoinments")
+    } catch (error) {
+        console.log(error);
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/");
+    }
+}
 
 module.exports = {
     getHomePage,
@@ -164,5 +243,11 @@ module.exports = {
     getHospitals,
     getClinics,
     getSingleHospital,
-    getLabs
+    getLabs,
+    bookClinicPage,
+    bookClinic,
+    bookHospitalPage,
+    bookHospital,
+    getAppoinments,
+    cancelAppoinment
 }

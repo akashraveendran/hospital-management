@@ -10,7 +10,7 @@
     }
 
     .card:hover {
-        transform: scale(1.01);
+        transform: scale(1.0001);
     }
 
     .navbar {
@@ -31,38 +31,37 @@
     .ms-3 {
         font-size: 23px;
     }
+
+    .btn {
+        color: red
+    }
 </style>
 
 <nav class="navbar navbar-light bg-light mb-5 d-flex justify-content-space-between">
-    <h1 class="ms-3">Available Clinics</h1>
+    <h1 class="ms-3">Your Appoinments</h1>
     <a class="text-light me-5 p-2" href="/" style="text-decoration: none;">Back</a>
 </nav>
 
 <div class="container library">
-
     <div class="row">
-        {{#if clinics}}
-        {{#each clinics}}
+        {{#if appoinments}}
+        {{#each appoinments}}
         <div class="col-12  card m-3">
-            <div class="p-1">
-                <img style="width: 100%;height:100%" src="/images/clinic/{{_id}}.jpg" alt="">
-            </div>
-            <div class="p-1">
+            <div class="p-3">
                 <div class="container">
-                    <h5>Doctor's Name : <b>{{doctorName}}</b></h5>
-                    <h6>Place : {{place}} </h6>
-                    <h6> About : {{description}} </h6>
-                    <h6>Opens at {{openingTime}} </h6>
-                    <h6>Opens at {{closingTime}} </h6>
-                    <a href="/book-clinic/{{_id}}" class="btn btn-primary text-light mt-3 mb-3">Make an
-                        appoinment</a>
+                    <h5>Doctor: <b style="color: green;">{{doctorName}}</b></h5>
+                    <h6> Date : {{date}} </h6>
+                    <h6> time : {{time}} </h6>
+                    <h6>Appoinment status : <b style="font-weight:700;text-decoration:underline">{{status}} </b></h6>
+                    <a href="/cancel-appoinment/{{_id}}" class="btn btn-outline-danger mt-3 mb-3">
+                        Cancel appoinment</a>
                 </div>
             </div>
         </div>
         {{/each}}
         {{else}}
         <center>
-            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No clinics Found !!!!</h1>
+            <h1 style="color:white; transform:scale(1.2);transition:all 0.5s ease;">No appoinments Found !!!!</h1>
         </center>
         {{/if}}
     </div>

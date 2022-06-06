@@ -13,7 +13,13 @@ const {
     getHospitals,
     getClinics,
     getSingleHospital,
-    getLabs } = require("../controllers/user-controller");
+    getLabs,
+    bookClinicPage,
+    bookClinic,
+    bookHospital,
+    bookHospitalPage,
+    getAppoinments,
+    cancelAppoinment } = require("../controllers/user-controller");
 const checkUser = require("../middlewares/checkUser")
 
 
@@ -30,10 +36,14 @@ router.get('/view-hospital/:id', checkUser, getSingleHospital);
 router.get('/view-clinics', checkUser, getClinics);
 router.get('/view-labs', checkUser, getLabs);
 router.post('/search');//get the searched category from req.body
-router.get('/book-doctor/:id', checkUser);
-router.get('/book-clinic/:id', checkUser);
-router.get('/view-messages', checkUser);
-router.get('/send-message', checkUser);
-router.post('/send-message', checkUser);
+router.get('/book-doctor/:id', checkUser, bookHospitalPage);
+router.post('/book-doctor/:id', checkUser, bookHospital);
+router.get('/book-clinic/:id', checkUser, bookClinicPage);
+router.post('/book-clinic/:id', checkUser, bookClinic);
+router.get('/view-appoinments', checkUser, getAppoinments);
+router.get('/cancel-appoinment/:id', checkUser, cancelAppoinment);
+// router.get('/view-messages', checkUser);
+// router.get('/send-message', checkUser);
+// router.post('/send-message', checkUser);
 
 module.exports = router;

@@ -73,8 +73,8 @@ const addNewDepartment = async (req, res) => {
 }
 const viewAllDepartment = async (req, res) => {
     try {
-        let departments = await DepartmentModel.find({});
-        console.log(departments)
+        let { _id } = req.session.hospital;
+        let departments = await DepartmentModel.find({ hospitalId: _id });
         let { alertMessage } = req.session;
         res.render("hospital/view-departments", { departments, alertMessage })
         delete req.session.alertMessage;
@@ -131,8 +131,8 @@ const addDoctorPage = async (req, res) => {
 }
 const viewAllDoctors = async (req, res) => {
     try {
-        let doctors = await DoctorModel.find({});
-        // console.log(doctors)
+        let { _id } = req.session.hospital;
+        let doctors = await DoctorModel.find({ hospitalId: _id });
         let { alertMessage } = req.session;
         res.render("hospital/view-doctors", { doctors, alertMessage })
         delete req.session.alertMessage;

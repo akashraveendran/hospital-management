@@ -11,7 +11,7 @@
             <h2 class="title" style="color: #2c3e50;">Laboratory Signup</h2>
         </div>
         <form class="login-form" action="/lab/update-profile" method="post" enctype="multipart/form-data">
-            <input type="text" name="labName" value={{lab.labName}} placeholder="Enter laboratory's Name" required />
+            <input type="text" name="labName" value="{{lab.labName}}" placeholder="Enter laboratory's Name" required />
             <textarea name="description" placeholder="Short description about laboratory" id="" cols="10" rows="5"
                 required>{{lab.description}}</textarea>
             <textarea name="address" placeholder="Address" id="" cols="10" rows="5" required>{{lab.address}}</textarea>

@@ -1,0 +1,29 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #d3d3e4, #888888);
+    }
+</style>
+
+<div class="login-page" style="width: 70vw;">
+    <div class="form">
+        <div>
+            <h2 class="title" style="color: #2c3e50;">Appoinment Form</h2>
+        </div>
+        <form class="login-form" action="/book-clinic/{{clinic._id}}" method="post" enctype="multipart/form-data">
+            <input type="text" name="doctorName" value="{{clinic.doctorName}}" readonly required />
+            <label for="">Date of Appoinment</label>
+            <input type="date" name="date" placeholder="Date of appoinment" required />
+            <label for="">Time of Appoinment</label>
+            <input type="time" name="time" placeholder="Time of appoinment" required />
+            <input type="text" name="patientName" placeholder="Patient's Name" required />
+            <input type="number" name="patientAge" placeholder="Age (in years)" required />
+            <textarea name="patientAddress" placeholder="Address of the patient" id="" cols="10" rows="5"
+                required></textarea>
+            <input type="number" name="patientPhone" placeholder="Phone No" required />
+            <input type="email" name="patientEmail" placeholder="Email Id" required />
+            <button type="submit" style="background: #888888;">SUBMIT</button>
+            <a href="/" class="font-weight-bold" style="text-decoration: none;">Back</a>
+        </form>
+    </div>
+</div>
