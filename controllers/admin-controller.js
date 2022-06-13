@@ -119,6 +119,16 @@ const getAllClinics = async (req, res) => {
         res.redirect("/admin")
     }
 }
+const getAllLabs = async (req, res) => {
+    try {
+        let labs = await LabModel.find({})
+        res.render("admin/view-all-labs", { labs })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin")
+    }
+}
 const addClinicPage = (req, res) => {
     res.render("admin/add-new-clinic")
 }
@@ -152,8 +162,9 @@ const deleteClinic = async (req, res) => {
 }
 const viewAllMessages = async (req, res) => {
     try {
-        let messages = await MessageModel.find({})
-        res.render("admin/view-all-messages", { messages })
+        let inbox = await MessageModel.find({ to: "Admin" })
+        let outbox = await MessageModel.find({ from: "Admin" })
+        res.render("admin/view-all-messages", { inbox, outbox })
     } catch (error) {
         console.log(error)
         req.session.alertMessage = "Error occured please try again"
@@ -161,8 +172,8 @@ const viewAllMessages = async (req, res) => {
     }
 }
 const sendMessagePage = (req, res) => {
-    let { id } = req.params;
-    res.render("admin/send-message", { id })
+    let { email } = req.params;
+    res.render("admin/send-message", { email })
 }
 const sendMessage = async (req, res) => {
     console.log(req.body)
@@ -242,5 +253,6 @@ module.exports = {
     deleteMessage,
     viewCheckupDatesPage,
     viewAllUsersPage,
-    deleteUser
+    deleteUser,
+    getAllLabs
 }

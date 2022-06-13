@@ -231,6 +231,38 @@ const cancelAppoinment = async (req, res) => {
     }
 }
 
+const viewAllMessages = async (req, res) => {
+    try {
+        let inbox = await MessageModel.find({ to: req.session.user.email })
+        let outbox = await MessageModel.find({ from: req.session.user.email })
+        console.log(inbox, outbox);
+        let { user } = req.session
+        res.render("user/view-messages", { user, inbox, outbox })
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured please try again"
+        res.redirect("/admin")
+    }
+}
+const sendMessagePage = (req, res) => {
+    let { email } = req.session.user;
+    res.render("user/send-message", { email })
+}
+const sendMessage = async (req, res) => {
+    let today = new Date();
+    req.body.date = today.toLocaleDateString();
+    req.body.time = today.toLocaleTimeString();
+
+    try {
+        const message = await MessageModel.create(req.body);
+        res.redirect('/view-messages');
+    } catch (error) {
+        console.log(error)
+        req.session.alertMessage = "Error occured try again !!!"
+        res.redirect('/admin/add-message')
+    }
+}
+
 module.exports = {
     getHomePage,
     getSignupPage,
@@ -249,5 +281,8 @@ module.exports = {
     bookHospitalPage,
     bookHospital,
     getAppoinments,
-    cancelAppoinment
+    cancelAppoinment,
+    viewAllMessages,
+    sendMessage,
+    sendMessagePage
 }

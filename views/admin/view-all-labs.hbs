@@ -1,0 +1,53 @@
+<link rel='stylesheet' href='/stylesheets/user.css' />
+<style>
+    body {
+        background: linear-gradient(90deg, #bdc3c7, #2c3e50);
+    }
+
+    .form {
+        width: 100%
+    }
+</style>
+
+<div class="login-page" style="width: 80vw">
+    <div class="form">
+        <div style="display: flex;justify-content: space-between;margin-bottom:15px">
+            <a href="/admin"><button style="background: rgb(206, 16, 16);"> Back</button></a>
+            <h2 class="title" style="color: #2c3e50;"> Hosapitals List</h2>
+            <a href="/admin/add-hospital"><button style="background: rgb(29, 173, 60);"> Add New Hospital</button></a>
+        </div>
+        {{#if labs}}
+        <table id="main_table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>phone number</th>
+                    <th>Opening Time</th>
+                    <th>Closing Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each labs}}
+                <tr>
+                    <td>{{labName}}</td>
+                    <td>{{email}}</td>
+                    <td>{{phone}}</td>
+                    <td>{{openingTime}}</td>
+                    <td>{{closingTime}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <center>
+            <h1 class="mt-5">There Are No Hospitals added !!!</h1>
+        </center>
+        {{/if}}
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#main_table").dataTable();
+    });
+</script>

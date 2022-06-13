@@ -13,10 +13,10 @@
     <div class="form">
         <div style="display: flex;justify-content: space-between;margin-bottom:15px">
             <a href="/admin"><button style="background: rgb(206, 16, 16);"> Back</button></a>
-            <h2 class="title" style="color: #2c3e50;"> Messages </h2>
+            <h2 class="title" style="color: #2c3e50;"> Inbox </h2>
             <div></div>
         </div>
-        {{#if messages}}
+        {{#if inbox}}
         <table id="main_table">
             <thead>
                 <tr>
@@ -27,17 +27,15 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each messages}}
+                {{#each inbox}}
                 <tr>
                     <td>{{from}}</td>
                     <td>{{message}}</td>
                     <td>{{date}}</td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <a href="/admin/send-message/{{_id}}"><button class="btn"
+                            <a href="/admin/send-message/{{from}}"><button class="btn"
                                     style="background: rgb(42, 45, 255);font-weight:600;">Reply</button></a>
-                            <a href="/admin/delete-message/{{_id}}"><button class="btn"
-                                    style="background: rgb(255, 68, 68);font-weight:600;">DELETE</button></a>
                         </div>
                     </td>
                 </tr>
@@ -46,7 +44,42 @@
         </table>
         {{else}}
         <center>
-            <h1 class="mt-5">There Are No Messages for you now </h1>
+            <h1 class="mt-5">There Are No Messages in your Inbox </h1>
+        </center>
+        {{/if}}
+    </div>
+</div>
+<div class="login-page" style="width: 80vw">
+    <div class="form">
+        <div style="display: flex;justify-content: space-between;margin-bottom:15px">
+            <a href="/admin"><button style="background: rgb(206, 16, 16);"> Back</button></a>
+            <h2 class="title" style="color: #2c3e50;"> Outbox </h2>
+            <div></div>
+        </div>
+        {{#if outbox}}
+        <table id="main_table">
+            <thead>
+                <tr>
+                    <th>To</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each outbox}}
+                <tr>
+                    <td>{{to}}</td>
+                    <td>{{message}}</td>
+                    <td>{{date}}</td>
+                    <td>{{time}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <center>
+            <h1 class="mt-5">There Are No Messages in your Outbox </h1>
         </center>
         {{/if}}
     </div>

@@ -19,7 +19,10 @@ const {
     bookHospital,
     bookHospitalPage,
     getAppoinments,
-    cancelAppoinment } = require("../controllers/user-controller");
+    cancelAppoinment,
+    viewAllMessages,
+    sendMessage,
+    sendMessagePage } = require("../controllers/user-controller");
 const checkUser = require("../middlewares/checkUser")
 
 
@@ -42,8 +45,8 @@ router.get('/book-clinic/:id', checkUser, bookClinicPage);
 router.post('/book-clinic/:id', checkUser, bookClinic);
 router.get('/view-appoinments', checkUser, getAppoinments);
 router.get('/cancel-appoinment/:id', checkUser, cancelAppoinment);
-// router.get('/view-messages', checkUser);
-// router.get('/send-message', checkUser);
-// router.post('/send-message', checkUser);
+router.get('/view-messages', checkUser, viewAllMessages);
+router.get('/send-message', checkUser, sendMessagePage);
+router.post('/send-message', checkUser, sendMessage);
 
 module.exports = router;

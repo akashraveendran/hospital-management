@@ -20,7 +20,8 @@ const {
     deleteMessage,
     viewCheckupDatesPage,
     viewAllUsersPage,
-    deleteUser
+    deleteUser,
+    getAllLabs
 } = require("../controllers/admin-controller");
 const checkAdmin = require('../middlewares/checkAdmin');
 
@@ -42,11 +43,12 @@ router.get("/delete-clinic/:id", checkAdmin, deleteClinic)
 // router.get("/update-clinic/:id")
 // router.post("/update-clinic/:id")
 router.get("/view-messages", checkAdmin, viewAllMessages)
-router.get("/send-message/:id", checkAdmin, sendMessagePage)
+router.get("/send-message/:email", checkAdmin, sendMessagePage)
 router.post("/send-message", checkAdmin, sendMessage)
 router.get("/delete-message/:id", checkAdmin, deleteMessage)
 router.get("/view-checkup-dates", viewCheckupDatesPage)
 router.get("/view-all-users", viewAllUsersPage)
+router.get("/view-all-labs", getAllLabs)
 router.get("/delete-user/:id", deleteUser)
 
 
